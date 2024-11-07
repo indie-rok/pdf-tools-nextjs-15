@@ -9,6 +9,7 @@ GlobalWorkerOptions.workerSrc = workerSrc;
 const PDFToImage = () => {
   const [images, setImages] = useState([]);
   const [resume, setResume] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handlePDFUpload = async (event) => {
     const file = event.target.files?.[0]; //
@@ -35,6 +36,7 @@ const PDFToImage = () => {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       const response = await fetch("/api/parse_pdf", {
         method: "POST",
         headers: {
@@ -47,8 +49,14 @@ const PDFToImage = () => {
       setResume(data.resume);
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <h1>Loading..</h1>;
+  }
 
   return (
     <>
