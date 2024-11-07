@@ -27,7 +27,7 @@ export async function POST(req) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${env.OPEN_AI_TOKEN}`,
+        Authorization: `Bearer ${process.env.OPEN_AI_TOKEN}`,
       },
       body: JSON.stringify({ messages, model: "gpt-4o" }),
     });
